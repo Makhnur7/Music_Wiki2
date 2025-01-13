@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Результаты поиска</h1>
+    <form method="get" action="{% url 'search' %}">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </form>
+
+    {% if query %}
+    <h3>Результаты для: "{{ query }}"</h3>
+    <div>
+        <h4>Группы</h4>
+        <ul>
+            {% for group in groups %}
+            <li><a href="{% url 'music:group_detail' group.pk %}">{{ group.name }}</a></li>
+            {% empty %}
+            <li>Нет найденных групп</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Альбомы</h4>
+        <ul>
+            {% for album in albums %}
+            <li><a href="{% url 'music:album_detail' album.pk %}">{{ album.name }}</a></li>
+            {% empty %}
+            <li>Нет найденных альбомов</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Песни</h4>
+        <ul>
+            {% for song in songs %}
+            <li><a href="{% url 'music:song_detail' song.pk %}">{{ song.name }}</a></li>
+            {% empty %}
+            <li>Нет найденных песен</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Участники</h4>
+        <ul>
+            {% for member in members %}
+            <li><a href="{% url 'music:member_detail' member.pk %}">{{ member.name }}</a></li>
+            {% empty %}
+            <li>Нет найденных участников</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <p>Введите запрос для поиска.</p>
+    {% endif %}
+</div>
+{% endblock %}

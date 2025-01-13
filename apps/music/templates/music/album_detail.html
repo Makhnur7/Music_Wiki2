@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 100px; margin-bottom: 100px;">
+    <div class="row">
+        <div class="col-md-4">
+            {% if album.cover_image %}
+            <img src="{{ album.cover_image.url }}" alt="{{ album.name }}" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% else %}
+            <img src="{% static 'img/default_album.png' %}" alt="Нет обложки" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ album.name }}</h2>
+            <p><strong>Дата выпуска:</strong> {{ album.release_date|date:"d M Y" }}</p>
+            <p>{{ album.description }}</p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Песни в альбоме</h3>
+            <ul class="list-group">
+                {% with album.songs.all as songs %}
+                {% if songs %}
+                    {% for song in songs %}
+                    <li class="list-group-item">
+                        <strong>{{ song.name }}</strong>
+                        <span class="text-muted">({{ song.duration }})</span>
+                        <audio controls style="float: right; width: 30%;">
+                            <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                            Ваш браузер не поддерживает аудио.
+                        </audio>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                <li class="list-group-item text-muted">Нет песен в этом альбоме.</li>
+                {% endif %}
+                {% endwith %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

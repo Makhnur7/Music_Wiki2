@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 150px;">
+    <div class="row">
+        <!-- Информация об участнике -->
+        <div class="col-md-4">
+            {% if member.photo %}
+            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% else %}
+            <img src="{% static 'img/default_member.png' %}" alt="Нет фото" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ member.name }}</h2>
+            <p><strong>Роль:</strong> {{ member.role }}</p>
+            <p><strong>Дата рождения:</strong> {{ member.date_of_birth|date:"d M Y" }}</p>
+            <p><strong>Биография:</strong></p>
+            <p>{{ member.biography }}</p>
+        </div>
+    </div>
+
+    <!-- Информация о группе -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Группа</h3>
+            <div class="card shadow-sm">
+                {% if group.image %}
+                <img src="{{ group.image.url }}" alt="{{ group.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'img/default_group.png' %}" alt="Нет изображения" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ group.name }}</h5>
+                    <p class="card-text">{{ group.description|truncatechars:150 }}</p>
+                    <a href="{% url 'music:group_detail' group.id %}" class="btn btn-primary mt-3">Подробнее о группе</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

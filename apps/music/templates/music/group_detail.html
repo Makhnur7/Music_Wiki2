@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 150px;">
+    <div class="row">
+        <!-- Информация о группе -->
+        <div class="col-md-4">
+            {% if group.image %}
+            <img src="{{ group.image.url }}" alt="{{ group.name }}" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% else %}
+            <img src="{% static 'img/default_group.png' %}" alt="Нет изображения" class="img-fluid mb-3" style="border-radius: 8px;">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ group.name }}</h2>
+            <p><strong>Описание:</strong> {{ group.description }}</p>
+            <p><strong>Дата создания:</strong> {{ group.created_at|date:"d M Y" }}</p>
+        </div>
+    </div>
+
+    <!-- Список альбомов группы -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Альбомы группы</h3>
+            {% if albums %}
+            <ul class="list-group">
+                {% for album in albums %}
+                <li class="list-group-item">
+                    <strong><a href="{% url 'music:album_detail' album.id %}">{{ album.name }}</a></strong>
+                    <span class="text-muted">({{ album.release_date|date:"d M Y" }})</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">У этой группы пока нет альбомов.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Список песен группы -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Песни группы</h3>
+            {% if songs %}
+            <ul class="list-group">
+                {% for song in songs %}
+                <li class="list-group-item">
+                    <strong><a href="{% url 'music:song_detail' song.id %}">{{ song.name }}</a></strong>
+                    <span class="text-muted">({{ song.duration }})</span>
+                    <audio controls style="float: right; width: 30%;">
+                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио.
+                    </audio>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">У этой группы пока нет песен.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Участники группы -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Участники группы</h3>
+            {% if members %}
+            <ul class="list-group">
+                {% for member in members %}
+                <li class="list-group-item">
+                    <strong>{{ member.name }}</strong> — {{ member.role }}
+                    {% if member.biography %}
+                    <p class="text-muted">{{ member.biography|truncatechars:150 }}</p>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">В этой группе пока нет участников.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Musico</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/audioplayer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body style="margin-top: 80px;"> <!-- Добавлен отступ для всего контента -->
+    <!-- header-start -->
+    <header>
+        <style>
+            .header-area {
+                background-color: #001D38;
+                color: white;
+                padding: 15px 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1030;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-menu ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .main-menu ul li {
+                display: inline-block;
+            }
+
+            .main-menu ul li a {
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                padding: 10px 15px;
+                transition: all 0.3s ease;
+            }
+
+            .main-menu ul li a:hover {
+                color: #FFD700;
+            }
+
+            .social_icon ul {
+                list-style: none;
+                display: flex;
+                justify-content: flex-end;
+                gap: 15px;
+            }
+
+            .social_icon ul li a {
+                color: white;
+                font-size: 16px;
+                transition: color 0.3s ease;
+            }
+
+            .social_icon ul li a:hover {
+                color: #00aced;
+            }
+        </style>
+        <div class="header-area">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <!-- Логотип -->
+                            <div class="col-xl-3 col-lg-2">
+                                <div class="logo">
+                                    <a href="{% url 'music:index' %}">
+                                        <img src="{% static 'img/logo.png' %}" alt="Логотип">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Главное меню -->
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="main-menu d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'music:index' %}">Главная</a></li>
+                                            <li><a href="{% url 'music:group_list' %}">Группы</a></li>
+                                            <li><a href="{% url 'music:album_list' %}">Альбомы</a></li>
+                                            <li><a href="{% url 'music:song_list' %}">Песни</a></li>
+                                            <li><a href="{% url 'music:member_list' %}">Участники</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 d-none d-lg-block">                           
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main style="margin-top: 220px;">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">Services</h3>
+                            <div class="subscribe-from">
+                                <form action="#">
+                                    <input type="text" placeholder="Enter your mail">
+                                    <button type="submit">Subscribe</button>
+                                </form>
+                            </div>
+                            <p class="sub_text">Esteem spirit temper too say adieus who direct esteem esteems luckily.</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-md-5 offset-xl-1">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">Contact Me</h3>
+                            <ul>
+                                <li><a href="#">conbusi@support.com</a></li>
+                                <li><a href="#">+10 873 672 6782</a></li>
+                                <li><a href="#">600/D, Green road, Kings Garden NewYork-6732</a></li>
+                            </ul>
+                            <div class="socail_links">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>

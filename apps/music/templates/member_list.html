@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 150px;">
+    <div class="section_title text-center mb-65">
+        <h3>Участники</h3>
+    </div>
+    <div class="row">
+        {% if members %}
+        {% for member in members %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <!-- Фото участника -->
+                {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'img/default_member.png' %}" alt="Нет фото" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% endif %}
+
+                <div class="card-body">
+                    <!-- Информация об участнике -->
+                    <h5 class="card-title">{{ member.name }}</h5>
+                    <p><strong>Роль:</strong> {{ member.role }}</p>
+                    {% if member.group %}
+                    <p><strong>Группа:</strong> <a href="{% url 'music:group_detail' member.group.pk %}">{{ member.group.name }}</a></p>
+                    {% else %}
+                    <p class="text-muted">Не принадлежит ни одной группе</p>
+                    {% endif %}
+                    <a href="{% url 'music:member_detail' member.pk %}" class="btn btn-primary mt-3"  style="color: white;background-color: #001D38;border: #001D38;">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-muted">Нет участников для отображения.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

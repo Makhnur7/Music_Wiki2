@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ song.name }}</h2>
+    {% if song.album %}
+    <p><strong>Альбом:</strong> <a href="{% url 'music:album_detail' song.album.pk %}">{{ song.album.name }}</a></p>
+    {% endif %}
+    <p><strong>Длительность:</strong> {{ song.duration }}</p>
+    <p><strong>Текст песни:</strong></p>
+    <div class="song-lyrics">
+        <p>{{ song.lyrics|linebreaks }}</p>
+    </div>
+    <audio controls>
+        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+</div>
+{% endblock %}
+

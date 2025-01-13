@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="music_area music_gallery">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="section_title text-center mb-65">
+                    <h3>Список песен</h3>
+                </div>
+                <ul class="list-group">
+                    {% if songs %}
+                        {% for song in songs %}
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <!-- Обложка альбома -->
+                                    <div class="col-md-2 text-center">
+                                        {% if song.album and song.album.cover_image %}
+                                            <img src="{{ song.album.cover_image.url }}" alt="{{ song.name }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                        {% else %}
+                                            <img src="{% static 'img/default_cover.png' %}" alt="No cover" class="img-thumbnail" style="width: 100px; height: auto;">
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Информация о песне -->
+                                    <div class="col-md-10">
+                                        <strong>{{ song.name }}</strong>
+                                        {% if song.duration %}
+                                            <span class="text-muted">({{ song.duration }})</span>
+                                        {% endif %}
+                                        <br>
+                                        {% if song.album %}
+                                            <span class="text-secondary">Альбом: 
+                                                <a href="{% url 'music:album_detail' song.album.id %}">{{ song.album.name }}</a>
+                                            </span><br>
+                                        {% endif %}
+                                        {% if song.group %}
+                                            <span class="text-secondary">Группа: 
+                                                <a href="{% url 'music:group_detail' song.group.id %}">{{ song.group.name }}</a>
+                                            </span><br>
+                                        {% endif %}
+                                        <span class="text-secondary">Дата выхода: {{ song.album.release_date|date:"d M Y" }}</span><br>
+
+                                        <!-- Аудиоплеер -->
+                                        <audio controls style="margin-top: 10px; width: 100%;">
+                                            <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                                            Ваш браузер не поддерживает аудио.
+                                        </audio>
+
+                                        <!-- Текст песни -->
+                                        {% if song.lyrics %}
+                                            <p class="mt-2">{{ song.lyrics|truncatechars:200 }}</p>
+                                            <a href="{% url 'music:song_detail' song.id %}" class="text-primary">Читать полностью текст</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-muted">Нет песен для отображения.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

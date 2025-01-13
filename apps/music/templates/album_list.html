@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="section_title text-center mb-65" style="margin-top: 50px;">
+        <h3>Список альбомов</h3>
+    </div>
+    <style>
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .btn {
+            background-color: #001D38;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #001D38;
+            color: white;
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+    </style>
+
+    <div class="row">
+        {% for album in albums %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm">
+                {% if album.cover_image %}
+                <img src="{{ album.cover_image.url }}" class="card-img-top" alt="{{ album.name }}">
+                {% else %}
+                <img src="{% static 'img/default_album.png' %}" class="card-img-top" alt="Нет обложки">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ album.name }}</h5>
+                    <p class="card-text">{{ album.description|truncatechars:150 }}</p>
+                    <a href="{% url 'music:album_detail' album.id %}" class="btn btn-primary mt-3"  style="color: white;background-color: #001D38;border: #001D38;">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
